@@ -96,8 +96,21 @@ class TestInlineMarkdown(unittest.TestCase):
             [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
         )
 
-    def test_image_nodes(self):
+    def test_links_nodes(self):
         node = TextNode("This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)", TextType.NORMAL)
-        print(split_nodes_image(node))
+        print(split_nodes_link([node]))
+    
+    def test_image_node(self):
+        node_with_image = TextNode(
+            "Here is an image of a wizard bear: ![wizard bear](https://example.com/wizard-bear.jpg) and more text after the image.",
+            TextType.NORMAL
+            )
+        print(split_nodes_image([node_with_image]))
+
+    
+    def test_text_to_text_nodes(self):
+        text = "This is **text** with an *italic* word and a `code block` and an ![obi wan image](https://i.imgur.com/fJRm4Vk.jpeg) and a [link](https://boot.dev)"
+        print(text_to_textnode(text))
+
 if __name__ == "__main__":
     unittest.main()
