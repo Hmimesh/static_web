@@ -1,7 +1,5 @@
 import unittest
-from Newline import (
-    split_nodes_delimiter,
-)
+from Newline import *
 
 from textnode import TextNode, TextType
 
@@ -85,7 +83,21 @@ class TestInlineMarkdown(unittest.TestCase):
             ],
             new_nodes,
         )
+    def test_image(self):
+        text =  "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        self.assertEqual(
+            extract_markdown_links(text),
+            [('to boot dev', 'https://www.boot.dev'), ('to youtube', 'https://www.youtube.com/@bootdotdev')]
+        )
+    def test_url(self):
+        text = "This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)"
+        self.assertEqual(
+            extract_markdown_links(text),
+            [("to boot dev", "https://www.boot.dev"), ("to youtube", "https://www.youtube.com/@bootdotdev")]
+        )
 
-
+    def test_image_nodes(self):
+        node = TextNode("This is text with a link [to boot dev](https://www.boot.dev) and [to youtube](https://www.youtube.com/@bootdotdev)", TextType.NORMAL)
+        print(split_nodes_image(node))
 if __name__ == "__main__":
     unittest.main()
