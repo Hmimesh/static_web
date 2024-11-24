@@ -1,1 +1,1 @@
-python3 -m unittest src/test_markdown.py
+python3 -m unittest discover src
